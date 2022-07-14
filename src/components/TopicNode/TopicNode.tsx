@@ -1,8 +1,10 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
 import React from "react";
 import Colors from "../../constants/Colors";
 import { Topic } from "../../types/modules";
 import { useColor } from "../../hooks/useColors";
+import Svg, { Circle } from "react-native-svg";
+import CircularProgress from "../CircularProgress";
 
 interface TopicNodeProps {
   topic: Topic;
@@ -11,15 +13,23 @@ interface TopicNodeProps {
 
 const TopicNode: React.FC<TopicNodeProps> = ({ topic, isDisabled = true }) => {
   const color = useColor();
-
+  const { width } = useWindowDimensions();
+  const itemWidth = width * 0.25;
   return (
-    <View style={styles.container}>
-      <View style={[styles.progress, { backgroundColor: color.darkL }]}>
+    <View style={[styles.container, { width: itemWidth }]}>
+      <View style={[styles.process, { width: itemWidth }]}>
+        <CircularProgress
+          size={itemWidth}
+          strokeWidth={8}
+          progressPercent={topic.progress * 100}
+          bgColor={color.processBackground}
+          progressColor={color.processColor}
+        />
         <View
           style={[
             styles.circle,
             {
-              borderColor: color.background,
+              width: itemWidth - 25,
               backgroundColor: isDisabled ? color.darkL : color.primary,
             },
           ]}
@@ -36,26 +46,27 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     margin: 10,
-    width: "30%",
     maxWidth: 150,
   },
-  progress: {
-    width: "100%",
-    padding: 10,
-    borderRadius: 999,
+
+  process: {
+    aspectRatio: 1,
+    justifyContent: "center",
   },
+
   circle: {
-    width: "100%",
+    alignItems: "center",
+    alignSelf: "center",
     aspectRatio: 1,
     borderRadius: 999,
     justifyContent: "center",
-    alignItems: "center",
-    borderWidth: 3,
   },
+
   image: {
     width: "50%",
     aspectRatio: 1,
   },
+
   title: {
     marginVertical: 5,
     fontSize: 16,

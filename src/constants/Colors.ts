@@ -7,6 +7,8 @@ export default {
     secondary: "#E85D75",
     tertiary: "#9D69A3",
     darkL: "#61707D",
+    processBackground: "#ddd",
+    processColor: "#40F99B",
 
     text: "#000",
     background: "#F5FBEF",
@@ -19,6 +21,8 @@ export default {
     secondary: "#E85D75",
     tertiary: "#9D69A3",
     darkL: "#61707D",
+    processBackground: "#555",
+    processColor: "#40F99B",
 
     text: "#F5FBEF",
     background: "#000",

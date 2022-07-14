@@ -3,5 +3,5 @@ export type Topic = {
   title: string;
   icon: string;
   level: number;
-  process: number;
+  progress: number;
 };

@@ -14,4 +14,4 @@ export const groupByLevel = (topics: any[]) => {
 };
 
 export const getCurrentActiveLevel = (levels: Topic[][]) =>
-  levels.reduce((acc, levelTopics) => (levelTopics.every((topic) => topic.process === 1) ? acc + 1 : acc), 1);
+  levels.reduce((acc, levelTopics) => (levelTopics.every((topic) => topic.progress === 1) ? acc + 1 : acc), 1);
