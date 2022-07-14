@@ -1,6 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import { Svg, Circle, Text as SVGText } from "react-native-svg";
+import { useColor } from "../../hooks/useColors";
 
 interface CircularProgressProps {
   size: number;
@@ -8,12 +9,14 @@ interface CircularProgressProps {
   progressPercent: number;
   bgColor?: string;
   progressColor?: string;
+  progressCompleteColor?: string;
   text?: string;
   textSize?: number;
   textColor?: string;
 }
 
 const CircularProgress = (props: CircularProgressProps) => {
+  const color = useColor();
   const { size, strokeWidth, text } = props;
   const radius = (size - strokeWidth) / 2;
   const circum = radius * 2 * Math.PI;
@@ -24,7 +27,7 @@ const CircularProgress = (props: CircularProgressProps) => {
       <Svg width={size} height={size}>
         {/* Background Circle */}
         <Circle
-          stroke={props.bgColor ? props.bgColor : "#f2f2f2"}
+          stroke={props.bgColor ? props.bgColor : "#ddd"}
           fill="none"
           cx={size / 2}
           cy={size / 2}
@@ -34,7 +37,13 @@ const CircularProgress = (props: CircularProgressProps) => {
 
         {/* Progress Circle */}
         <Circle
-          stroke={props.progressColor ? props.progressColor : "#3b5998"}
+          stroke={
+            props.progressPercent
+              ? props.progressPercent >= 100
+                ? props.progressCompleteColor
+                : props.progressColor
+              : color.primary
+          }
           fill="none"
           cx={size / 2}
           cy={size / 2}

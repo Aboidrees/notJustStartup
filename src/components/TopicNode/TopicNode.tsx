@@ -23,14 +23,15 @@ const TopicNode: React.FC<TopicNodeProps> = ({ topic, isDisabled = true }) => {
           strokeWidth={8}
           progressPercent={topic.progress * 100}
           bgColor={color.processBackground}
-          progressColor={color.processColor}
+          progressColor={color.secondary}
+          progressCompleteColor={color.primary}
         />
         <View
           style={[
             styles.circle,
             {
               width: itemWidth - 25,
-              backgroundColor: isDisabled ? color.darkL : color.primary,
+              backgroundColor: isDisabled ? color.processBackground : color.primary,
             },
           ]}
         >
