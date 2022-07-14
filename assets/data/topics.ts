@@ -1,0 +1,58 @@
+export default [
+  {
+    id: "1",
+    title: "Variables",
+    icon: "https://cdn1.iconfinder.com/data/icons/heroicons-ui/24/variable-512.png",
+    level: 1,
+    process: 0.3,
+  },
+  {
+    id: "2",
+    title: "If Statement",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_210759.png",
+    level: 2,
+    process: 0,
+  },
+  {
+    id: "3",
+    title: "If-else Statement",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_210759.png",
+    level: 2,
+    process: 0,
+  },
+  {
+    id: "4",
+    title: "If-else Statement",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_210759.png",
+    level: 3,
+    process: 0,
+  },
+  {
+    id: "5",
+    title: "Loops",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_146607.png",
+    level: 4,
+    process: 0,
+  },
+  {
+    id: "6",
+    title: "Loops",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_146607.png",
+    level: 4,
+    process: 0,
+  },
+  {
+    id: "7",
+    title: "Loops",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_146607.png",
+    level: 4,
+    process: 0,
+  },
+  {
+    id: "8",
+    title: "Loops",
+    icon: "http://cdn.onlinewebfonts.com/svg/img_146607.png",
+    level: 5,
+    process: 0,
+  },
+];
