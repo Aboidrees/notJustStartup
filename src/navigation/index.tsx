@@ -9,15 +9,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, DefaultTheme, DarkTheme } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, Pressable } from "react-native";
+import { ColorSchemeName } from "react-native";
 
-import Colors from "../constants/Colors";
-import useColorScheme from "../hooks/useColorScheme";
-import NotFoundScreen from "../screens/NotFoundScreen";
-import ModuleScreen from "../screens/ModuleScreen";
-import ProfileScreen from "../screens/ProfileScreen";
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from "../../types";
+import { ModuleScreen, NotFoundScreen, ProfileScreen, TopicScreen } from "../screens";
+import { RootStackParamList, RootTabParamList } from "../types/navigation";
 import LinkingConfiguration from "./LinkingConfiguration";
+import { useColor } from "../hooks";
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -37,6 +34,7 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="Topic" component={TopicScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
     </Stack.Navigator>
   );
@@ -49,15 +47,10 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const color = useColor();
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="Module"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}
-    >
+    <BottomTab.Navigator initialRouteName="Module" screenOptions={{ tabBarActiveTintColor: color.tint }}>
       <BottomTab.Screen
         name="Module"
         component={ModuleScreen}

@@ -5,6 +5,26 @@ export default [
     icon: "https://cdn1.iconfinder.com/data/icons/heroicons-ui/24/variable-512.png",
     level: 1,
     progress: 1,
+    resources: [
+      {
+        id: "1",
+        title: "JavaScript variable",
+        url: "https://www.w3schools.com/js/js_variables.asp",
+        completed: true,
+      },
+      {
+        id: "2",
+        title: "JavaScript Let",
+        url: "https://www.w3schools.com/js/js_let.asp",
+        completed: false,
+      },
+      {
+        id: "3",
+        title: "JavaScript Const",
+        url: "https://www.w3schools.com/js/js_const.asp",
+        completed: false,
+      },
+    ],
   },
   {
     id: "2",

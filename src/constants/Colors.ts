@@ -10,6 +10,7 @@ export default {
     processBackground: "#ddd",
 
     text: "#000",
+    textReverse: "#F5FBEF",
     background: "#F5FBEF",
     tint: tintColorLight,
     tabIconDefault: "#ccc",
@@ -23,6 +24,7 @@ export default {
     processBackground: "#555",
 
     text: "#F5FBEF",
+    textReverse: "#000",
     background: "#000",
     tint: tintColorDark,
     tabIconDefault: "#ccc",

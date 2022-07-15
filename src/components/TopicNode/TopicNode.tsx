@@ -1,10 +1,9 @@
-import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
+import { View, Text, Image, StyleSheet, useWindowDimensions, Pressable } from "react-native";
 import React from "react";
-import Colors from "../../constants/Colors";
 import { Topic } from "../../types/modules";
 import { useColor } from "../../hooks/useColors";
-import Svg, { Circle } from "react-native-svg";
 import CircularProgress from "../CircularProgress";
+import { useNavigation } from "@react-navigation/native";
 
 interface TopicNodeProps {
   topic: Topic;
@@ -15,8 +14,12 @@ const TopicNode: React.FC<TopicNodeProps> = ({ topic, isDisabled = true }) => {
   const color = useColor();
   const { width } = useWindowDimensions();
   const itemWidth = width * 0.25;
+  const navigation = useNavigation();
+
+  const onPress = () => navigation.navigate("Topic", { id: topic.id });
+
   return (
-    <View style={[styles.container, { width: itemWidth }]}>
+    <Pressable onPress={onPress} disabled={isDisabled} style={[styles.container, { width: itemWidth }]}>
       <View style={[styles.process, { width: itemWidth }]}>
         <CircularProgress
           size={itemWidth}
@@ -39,7 +42,7 @@ const TopicNode: React.FC<TopicNodeProps> = ({ topic, isDisabled = true }) => {
         </View>
       </View>
       <Text style={[styles.title, { color: color.text }]}>{topic.title}</Text>
-    </View>
+    </Pressable>
   );
 };
 
