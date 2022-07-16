@@ -1,10 +1,11 @@
-import { View, Text, Image, StyleSheet, FlatList } from "react-native";
+import { View, Text, Image, StyleSheet, FlatList, ScrollView } from "react-native";
 import React from "react";
 import { useColor } from "../../hooks";
 import { ResourceListItem } from "../../components";
 import topics from "../../../assets/data/topics";
-import { useNavigation, useRoute } from "@react-navigation/native";
 import { RootStackScreenProps } from "../../types/navigation";
+import Markdown from "react-native-markdown-display";
+import TopicSection from "./TopicSection";
 
 const TopicScreen: React.FC<RootStackScreenProps<"Topic">> = ({ route, navigation }) => {
   const color = useColor();
@@ -16,18 +17,38 @@ const TopicScreen: React.FC<RootStackScreenProps<"Topic">> = ({ route, navigatio
   if (topic) navigation.setOptions({ title: topic?.title });
 
   return (
-    <View style={[styles.container, { backgroundColor: color.background }]}>
+    <ScrollView style={[styles.container, { backgroundColor: color.background }]}>
       {/* <Image source={{ uri: "https://picsum.photos/300/300" }} style={styles.image} /> */}
-      <Text style={styles.title}>Resources</Text>
-      {topic?.resources?.map((resource, index) => (
-        <ResourceListItem
-          resource={resource}
-          key={resource.id}
-          index={index}
-          isLast={index + 1 === topic.resources.length}
-        />
-      ))}
-    </View>
+      <TopicSection title="Introduction" display={!!topic?.description}>
+        <Markdown>{topic?.description}</Markdown>
+      </TopicSection>
+
+      <TopicSection title="Resources" display={!!topic?.resources}>
+        {topic?.resources?.map((resource, index) => (
+          <ResourceListItem
+            resource={resource}
+            key={resource.id}
+            index={index}
+            isLast={index + 1 === topic.resources.length}
+          />
+        ))}
+      </TopicSection>
+
+      <TopicSection title="Context" display={!!topic?.context}>
+        <Markdown>{topic?.context}</Markdown>
+      </TopicSection>
+
+      <TopicSection title="Exercises" display={!!topic?.exercises}>
+        {topic?.exercises?.map((resource, index) => (
+          <ResourceListItem
+            resource={resource}
+            key={resource.id}
+            index={index}
+            isLast={index + 1 === topic.exercises.length}
+          />
+        ))}
+      </TopicSection>
+    </ScrollView>
   );
 };
 
@@ -36,10 +57,10 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "500",
-    letterSpacing: 1.1,
+
+  image: {
+    width: "100%",
+    height: 200,
   },
 });
 

@@ -29,9 +29,8 @@ const ResourceListItem: React.FC<ResourceListItemProps> = ({ resource, index, is
       <View
         style={[
           styles.indexContainer,
-          resource.completed
-            ? { backgroundColor: color.primary, borderColor: color.primary }
-            : { borderColor: color.darkL },
+          resource.completed && { backgroundColor: color.primary, borderColor: color.primary },
+          !resource.completed && { borderColor: color.darkL },
         ]}
       >
         {resource.completed && <Ionicons name="ios-checkmark-sharp" size={20} color={color.textReverse} />}
@@ -46,28 +45,27 @@ const ResourceListItem: React.FC<ResourceListItemProps> = ({ resource, index, is
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    padding: 10,
-    marginVertical: 5,
+    marginBottom: 30,
     alignItems: "center",
   },
   indexContainer: {
     width: 30,
-    borderRadius: 15,
     aspectRatio: 1,
+    borderRadius: 15,
     borderWidth: 2,
     alignItems: "center",
     justifyContent: "center",
     marginRight: 5,
   },
+  icon: {
+    marginLeft: "auto",
+  },
   lineIndicator: {
     position: "absolute",
     height: "100%",
     width: 2,
-    left: 24,
-    top: 40,
-  },
-  icon: {
-    marginLeft: "auto",
+    left: 15,
+    top: 30,
   },
 });
 
