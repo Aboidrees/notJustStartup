@@ -8,6 +8,7 @@ export default {
     tertiary: "#9D69A3",
     darkL: "#61707D",
     processBackground: "#ddd",
+    white: "#fff",
 
     text: "#000",
     textReverse: "#F5FBEF",
@@ -22,6 +23,7 @@ export default {
     tertiary: "#9D69A3",
     darkL: "#61707D",
     processBackground: "#555",
+    white: "#fff",
 
     text: "#F5FBEF",
     textReverse: "#000",

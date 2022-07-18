@@ -13,7 +13,9 @@ interface TopicNodeProps {
 const TopicNode: React.FC<TopicNodeProps> = ({ topic, isDisabled = true }) => {
   const color = useColor();
   const { width } = useWindowDimensions();
-  const itemWidth = width * 0.25;
+
+  const itemWidth = width * 0.3 - width * 0.03;
+
   const navigation = useNavigation();
 
   const onPress = () => navigation.navigate("Topic", { id: topic.id });
@@ -33,7 +35,7 @@ const TopicNode: React.FC<TopicNodeProps> = ({ topic, isDisabled = true }) => {
           style={[
             styles.circle,
             {
-              width: itemWidth - 25,
+              width: itemWidth - 30,
               backgroundColor: isDisabled ? color.processBackground : color.primary,
             },
           ]}

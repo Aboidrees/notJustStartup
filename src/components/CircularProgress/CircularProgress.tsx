@@ -18,7 +18,7 @@ interface CircularProgressProps {
 const CircularProgress = (props: CircularProgressProps) => {
   const color = useColor();
   const { size, strokeWidth, text } = props;
-  const radius = (size - strokeWidth) / 2;
+  const radius = (size - strokeWidth - 2) / 2;
   const circum = radius * 2 * Math.PI;
   const svgProgress = 100 - props.progressPercent;
 

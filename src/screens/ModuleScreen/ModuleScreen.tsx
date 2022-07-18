@@ -8,9 +8,7 @@ import { getCurrentActiveLevel, groupByLevel } from "../../utils/topics";
 const levels = groupByLevel(topics);
 const currentLevel = getCurrentActiveLevel(levels);
 
-const ModuleScreen = () => {
-  console.log(currentLevel);
-
+const ModuleScreen: React.FC = () => {
   return (
     <View style={styles.container}>
       <FlatList
