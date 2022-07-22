@@ -6,9 +6,18 @@ import { Shadow } from "react-native-shadow-2";
 interface CustomButtonProps extends PressableProps {
   text: string;
   disabled?: boolean;
+  backgroundColor?: string;
+  textColor?: string;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ onPress, disabled = false, text, ...otherProps }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({
+  onPress,
+  disabled = false,
+  text,
+  backgroundColor,
+  textColor,
+  ...otherProps
+}) => {
   const color = useColor();
 
   return (
@@ -16,14 +25,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({ onPress, disabled = false, 
       containerViewStyle={[{ marginVertical: 10 }]}
       viewStyle={[{ width: "100%" }]}
       distance={2}
-      offset={[2, 7]}
-      startColor={"#00000040"}
+      offset={[2, 3]}
+      startColor={"#00000030"}
       getChildRadius
     >
       <Pressable
         onPress={onPress}
         disabled={disabled}
-        style={[styles.container, { backgroundColor: disabled ? color.processBackground : color.primary }]}
+        style={[
+          styles.container,
+          { backgroundColor: disabled ? color.tabIconDefault : backgroundColor || color.primary },
+        ]}
         {...otherProps}
       >
         <Text style={[styles.text, { color: color.white }]}>{text}</Text>

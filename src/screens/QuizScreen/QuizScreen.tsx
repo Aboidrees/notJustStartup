@@ -1,60 +1,100 @@
-import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
-import React, { useState } from "react";
+import { View, Text, StyleSheet, Image, ScrollView, Alert } from "react-native";
+import React, { useEffect, useState } from "react";
 import Markdown from "react-native-markdown-display";
 
-import { CustomButton, MultipleChoiceAnswers } from "../../components";
+import { CustomButton, MultipleChoiceAnswers, ProgressBar } from "../../components";
 import { QuizType } from "../../types/modules";
 import { useColor } from "../../hooks";
 
 import quiz from "../../../assets/data/quiz";
 
-const question = quiz[0];
-
 const QuizScreen: React.FC = () => {
   const color = useColor();
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [question, setQuestion] = useState(quiz[questionIndex]);
 
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([]);
+  const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean | undefined>(undefined);
+  const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
+
+  useEffect(() => {
+    if (questionIndex === quiz.length) {
+      Alert.alert(
+        "Quiz finished",
+        "You answered correctly " + numberOfCorrectAnswers + " out of " + quiz.length + " questions."
+      );
+      return;
+    }
+    setQuestion(quiz[questionIndex]);
+    setAnsweredCorrectly(undefined);
+    setSelectedAnswers([]);
+  }, [questionIndex]);
 
   const onChoicePress = (choiceID: number) => {
     setSelectedAnswers((currentSelected) => {
       if (currentSelected.includes(choiceID)) {
         return currentSelected.filter((answer) => answer !== choiceID);
       } else {
-        if (question.type === QuizType.MULTIPLE_ANSWERS) {
-          return [...currentSelected, choiceID];
-        } else {
-          return [choiceID];
-        }
+        return question.type === QuizType.MULTIPLE_ANSWERS ? [...currentSelected, choiceID] : [choiceID];
       }
     });
   };
 
   const onSubmit = () => {
-    console.warn("Submit");
+    const correctAnswers = question.choices.map((choice) => choice.correct && choice.id).filter((answer) => answer);
+    if (selectedAnswers.length !== correctAnswers.length) {
+      setAnsweredCorrectly(false);
+      return;
+    }
+    const isCorrect = selectedAnswers.every((answer) => correctAnswers.includes(answer));
+    setAnsweredCorrectly(isCorrect);
+    if (isCorrect) setNumberOfCorrectAnswers((n) => n + 1);
   };
+
+  const onContinue = () => setQuestionIndex((currentIndex) => currentIndex + 1);
 
   const isButtonDisabled = selectedAnswers.length === 0;
 
   return (
-    <ScrollView contentContainerStyle={styles.container} style={{ backgroundColor: color.white }}>
-      <Text style={styles.question}>{question.question}</Text>
-      {!!question.image && <Image source={{ uri: question.image }} style={styles.questionImage} resizeMode="contain" />}
-      {!!question.content && <Markdown>{question.content}</Markdown>}
+    <>
+      <ProgressBar progress={questionIndex / quiz.length} />
+      <ScrollView contentContainerStyle={styles.container} style={{ backgroundColor: color.white }}>
+        <Text style={styles.question}>{question.question}</Text>
+        {!!question.image && (
+          <Image source={{ uri: question.image }} style={styles.questionImage} resizeMode="contain" />
+        )}
+        {!!question.content && <Markdown>{question.content}</Markdown>}
 
-      {/* Choices */}
-      {question?.choices?.map((choice) => (
-        <MultipleChoiceAnswers
-          key={choice.id}
-          choice={choice}
-          onPress={onChoicePress}
-          isSelected={selectedAnswers.includes(choice.id)}
-        />
-      ))}
-      {/* Button */}
-      <View style={styles.button}>
+        {/* Choices */}
+        <View style={styles.choicesContainer}>
+          {question?.choices?.map((choice) => (
+            <MultipleChoiceAnswers
+              key={choice.id}
+              choice={choice}
+              onPress={onChoicePress}
+              isSelected={selectedAnswers.includes(choice.id)}
+              disabled={answeredCorrectly !== undefined}
+            />
+          ))}
+          {/* Button */}
+        </View>
         <CustomButton text="Submit" onPress={onSubmit} disabled={isButtonDisabled} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+
+      {answeredCorrectly === true && (
+        <View style={[styles.answerBox, { backgroundColor: color.background, borderColor: color.primary }]}>
+          <Text style={[styles.answerTitle, { color: color.primary }]}>Correct</Text>
+          <CustomButton text="Continue" onPress={onContinue} />
+        </View>
+      )}
+
+      {answeredCorrectly === false && (
+        <View style={[styles.answerBox, { backgroundColor: color.backgroundError, borderColor: color.secondary }]}>
+          <Text style={[styles.answerTitle, { color: color.secondary }]}>Wrong!</Text>
+          <CustomButton text="Continue" backgroundColor={color.secondary} onPress={onContinue} />
+        </View>
+      )}
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -71,8 +111,32 @@ const styles = StyleSheet.create({
     width: "100%",
     aspectRatio: 6 / 4,
   },
-  button: {
+  choicesContainer: {
     marginTop: "auto",
+  },
+  answerBox: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    padding: 10,
+    width: "100%",
+    borderTopRightRadius: 15,
+    borderTopLeftRadius: 15,
+    borderWidth: 2,
+    borderBottomWidth: 0,
+    borderRightWidth: 1,
+    borderLeftWidth: 1,
+    //
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.3,
+    elevation: 13,
+  },
+  answerTitle: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginVertical: 10,
   },
 });
 export default QuizScreen;

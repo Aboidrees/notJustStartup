@@ -24,7 +24,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Root">
+    <Stack.Navigator initialRouteName="Quiz">
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="Topic" component={TopicScreen} />
       <Stack.Screen name="Quiz" component={QuizScreen} />

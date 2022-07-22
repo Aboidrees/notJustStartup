@@ -19,7 +19,7 @@ export default [
       {
         id: 3,
         text: "3",
-        correct: false,
+        correct: true,
       },
       {
         id: 4,
