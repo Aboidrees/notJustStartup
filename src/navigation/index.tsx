@@ -11,7 +11,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { ColorSchemeName } from "react-native";
 
-import { ModuleScreen, NotFoundScreen, ProfileScreen, QuizScreen, TopicScreen } from "../screens";
+import { ModuleScreen, NotFoundScreen, ProfileScreen, QuizEndScreen, QuizScreen, TopicScreen } from "../screens";
 import { RootStackParamList, RootTabParamList } from "../types/navigation";
 import LinkingConfiguration from "./LinkingConfiguration";
 import { useColor } from "../hooks";
@@ -24,10 +24,11 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="Quiz">
+    <Stack.Navigator>
       <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen name="Topic" component={TopicScreen} />
       <Stack.Screen name="Quiz" component={QuizScreen} />
+      <Stack.Screen name="QuizEnd" component={QuizEndScreen} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: "Oops!" }} />
     </Stack.Navigator>
   );

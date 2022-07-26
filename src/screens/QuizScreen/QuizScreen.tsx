@@ -4,11 +4,13 @@ import Markdown from "react-native-markdown-display";
 
 import { CustomButton, MultipleChoiceAnswers, ProgressBar } from "../../components";
 import { QuizType } from "../../types/modules";
-import { useColor } from "../../hooks";
+import { useApplyHeaderWorkaround, useColor } from "../../hooks";
+import Animated, { SlideInDown, SlideInUp, SlideOutDown } from "react-native-reanimated";
 
 import quiz from "../../../assets/data/quiz";
+import { RootStackScreenProps } from "../../types/navigation";
 
-const QuizScreen: React.FC = () => {
+const QuizScreen: React.FC<RootStackScreenProps<"Quiz">> = ({ navigation }) => {
   const color = useColor();
   const [questionIndex, setQuestionIndex] = useState(0);
   const [question, setQuestion] = useState(quiz[questionIndex]);
@@ -17,12 +19,11 @@ const QuizScreen: React.FC = () => {
   const [answeredCorrectly, setAnsweredCorrectly] = useState<boolean | undefined>(undefined);
   const [numberOfCorrectAnswers, setNumberOfCorrectAnswers] = useState(0);
 
+  useApplyHeaderWorkaround(navigation.setOptions);
+
   useEffect(() => {
     if (questionIndex === quiz.length) {
-      Alert.alert(
-        "Quiz finished",
-        "You answered correctly " + numberOfCorrectAnswers + " out of " + quiz.length + " questions."
-      );
+      navigation.navigate("QuizEnd", { nofQuestions: quiz.length, nofCorrectAnswers: numberOfCorrectAnswers });
       return;
     }
     setQuestion(quiz[questionIndex]);
@@ -82,17 +83,25 @@ const QuizScreen: React.FC = () => {
       </ScrollView>
 
       {answeredCorrectly === true && (
-        <View style={[styles.answerBox, { backgroundColor: color.background, borderColor: color.primary }]}>
+        <Animated.View
+          entering={SlideInDown.duration(500)}
+          exiting={SlideOutDown.duration(500)}
+          style={[styles.answerBox, { backgroundColor: color.background, borderColor: color.primary }]}
+        >
           <Text style={[styles.answerTitle, { color: color.primary }]}>Correct</Text>
           <CustomButton text="Continue" onPress={onContinue} />
-        </View>
+        </Animated.View>
       )}
 
       {answeredCorrectly === false && (
-        <View style={[styles.answerBox, { backgroundColor: color.backgroundError, borderColor: color.secondary }]}>
+        <Animated.View
+          entering={SlideInDown.duration(500)}
+          exiting={SlideOutDown.duration(500)}
+          style={[styles.answerBox, { backgroundColor: color.backgroundError, borderColor: color.secondary }]}
+        >
           <Text style={[styles.answerTitle, { color: color.secondary }]}>Wrong!</Text>
-          <CustomButton text="Continue" backgroundColor={color.secondary} onPress={onContinue} />
-        </View>
+          <CustomButton text="Continue" onPress={onContinue} />
+        </Animated.View>
       )}
     </>
   );

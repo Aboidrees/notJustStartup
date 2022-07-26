@@ -1,6 +1,6 @@
 import { View, Text, Image, StyleSheet, FlatList, ScrollView } from "react-native";
 import React, { useEffect } from "react";
-import { useColor } from "../../hooks";
+import { useApplyHeaderWorkaround, useColor } from "../../hooks";
 import { CustomButton, ResourceListItem } from "../../components";
 import topics from "../../../assets/data/topics";
 import { RootStackScreenProps } from "../../types/navigation";
@@ -15,7 +15,7 @@ const TopicScreen: React.FC<RootStackScreenProps<"Topic">> = ({ route, navigatio
   const topic = topics.find((topic) => topic.id === topicId);
 
   const onStartQuiz = () => navigation.navigate("Quiz", { id: "123" });
-
+  useApplyHeaderWorkaround(navigation.setOptions);
   useEffect(() => {
     if (topic) navigation.setOptions({ title: topic?.title });
   }, [topic]);
@@ -62,13 +62,8 @@ const TopicScreen: React.FC<RootStackScreenProps<"Topic">> = ({ route, navigatio
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    minHeight: "100%",
+    flexGrow: 1,
   },
-
-  // image: {
-  //   width: "100%",
-  //   height: 200,
-  // },
 });
 
 export default TopicScreen;

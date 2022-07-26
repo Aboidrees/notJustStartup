@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Topic: { id: string };
   Quiz: { id: string };
+  QuizEnd: { nofQuestions: number; nofCorrectAnswers: number };
   Modal: undefined;
   NotFound: undefined;
 };

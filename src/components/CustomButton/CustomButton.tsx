@@ -1,46 +1,26 @@
 import { Text, Pressable, PressableProps, StyleSheet } from "react-native";
 import React from "react";
 import { useColor } from "../../hooks";
-import { Shadow } from "react-native-shadow-2";
+import Colors from "../../constants/Colors";
 
 interface CustomButtonProps extends PressableProps {
   text: string;
-  disabled?: boolean;
-  backgroundColor?: string;
-  textColor?: string;
+  type?: "PRIMARY" | "SECONDARY" | "TERTIARY";
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({
-  onPress,
-  disabled = false,
-  text,
-  backgroundColor,
-  textColor,
-  ...otherProps
-}) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ text, style, disabled, type = "PRIMARY", ...otherProps }) => {
   const color = useColor();
+  const buttonStyle = styles[`container_${type}`];
+  const textStyle = styles[`text_${type}`];
 
   return (
-    <Shadow
-      containerViewStyle={[{ marginVertical: 10 }]}
-      viewStyle={[{ width: "100%" }]}
-      distance={2}
-      offset={[2, 3]}
-      startColor={"#00000030"}
-      getChildRadius
+    <Pressable
+      disabled={disabled}
+      style={[styles.container, buttonStyle, style as any, disabled && { backgroundColor: color.tabIconDefault }]}
+      {...otherProps}
     >
-      <Pressable
-        onPress={onPress}
-        disabled={disabled}
-        style={[
-          styles.container,
-          { backgroundColor: disabled ? color.tabIconDefault : backgroundColor || color.primary },
-        ]}
-        {...otherProps}
-      >
-        <Text style={[styles.text, { color: color.white }]}>{text}</Text>
-      </Pressable>
-    </Shadow>
+      <Text style={[styles.text, textStyle]}>{text}</Text>
+    </Pressable>
   );
 };
 
@@ -57,10 +37,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
-  text: {
-    fontSize: 16,
-    fontWeight: "500",
+  container_PRIMARY: {
+    backgroundColor: Colors.light.primary,
   },
+  container_SECONDARY: {
+    borderWidth: 2,
+    backgroundColor: Colors.light.white,
+    borderColor: Colors.light.primary,
+  },
+  container_TERTIARY: { backgroundColor: Colors.light.white },
+  text: { fontSize: 16, fontWeight: "500" },
+
+  //
+  text_PRIMARY: { color: Colors.light.white },
+  //
+  text_SECONDARY: { color: Colors.light.primary },
+  //
+  text_TERTIARY: { color: Colors.light.primary },
 });
 
 export default CustomButton;
