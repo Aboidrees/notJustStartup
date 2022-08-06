@@ -1,0 +1,10 @@
+{
+  "resourceName": "s3notjuststartupstorage2627508b",
+  "bucketName": "notjuststartup-storage-2627508b",
+  "policyUUID": "ecf438be",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "READ"
+  ]
+}

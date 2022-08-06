@@ -22,7 +22,7 @@ const ResourceListItem: React.FC<ResourceListItemProps> = ({ resource, index, is
         <View
           style={[
             styles.lineIndicator,
-            resource.completed ? { backgroundColor: color.primary } : { backgroundColor: color.darkL },
+            resource.completed ? { backgroundColor: color.primary } : { backgroundColor: color.dark },
           ]}
         />
       )}
@@ -30,7 +30,7 @@ const ResourceListItem: React.FC<ResourceListItemProps> = ({ resource, index, is
         style={[
           styles.indexContainer,
           resource.completed && { backgroundColor: color.primary, borderColor: color.primary },
-          !resource.completed && { borderColor: color.darkL },
+          !resource.completed && { borderColor: color.dark },
         ]}
       >
         {resource.completed && <Ionicons name="ios-checkmark-sharp" size={20} color={color.textReverse} />}

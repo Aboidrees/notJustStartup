@@ -5,7 +5,7 @@ const commonColors = {
   primary: "#40F99B",
   secondary: "#E85D75",
   tertiary: "#9D69A3",
-  darkL: "#61707D",
+  dark: "#61707D",
   white: "#fff",
   black: "#000",
   tabIconDefault: "#ccc",

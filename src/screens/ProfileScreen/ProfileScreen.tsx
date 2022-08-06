@@ -3,6 +3,7 @@ import React from "react";
 import { useColor } from "../../hooks";
 import { CustomButton } from "../../components";
 import happyDuck from "../../../assets/images/happy.png";
+import { Auth } from "aws-amplify";
 
 const ProfileScreen: React.FC = () => {
   const color = useColor();
@@ -15,7 +16,7 @@ const ProfileScreen: React.FC = () => {
       <Text style={styles.name}>Muhammad Yousif</Text>
 
       <View style={styles.buttonContainer}>
-        <CustomButton text="Sing out" type={"TERTIARY"} />
+        <CustomButton text="Sing out" onPress={() => Auth.signOut()} type={"TERTIARY"} />
       </View>
     </View>
   );
